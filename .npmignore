@@ -1,0 +1,6 @@
+/src
+/node_modules
+/dist
+webpack.config.js
+.travis.yml
+
