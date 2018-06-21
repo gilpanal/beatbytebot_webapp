@@ -165,7 +165,7 @@
 .track-drop {
   border: 2px dashed blue;
   height: 100px;
-  width: 200px;
+  width: 100%;
   margin: 1em 0; }
   .track-drop::before {
     content: "Drop audio file(s) here!"; }

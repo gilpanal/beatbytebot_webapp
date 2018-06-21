@@ -19,7 +19,7 @@ var playlist = WaveformPlaylist.init({
 
 playlist.load([
   {
-    "src": "media/Estefa/Acustica_00.wav",
+    "src": "media/Estefa/Acustica_00.mp3",
     "name": "Guitar",
     "fadeIn": {
       "duration": 0.5
@@ -31,7 +31,7 @@ playlist.load([
     "waveOutlineColor": '#c0dce0'
   },
   {
-    "src": "media/Estefa/Acustica_01.wav",
+    "src": "media/Estefa/Acustica_01.mp3",
     "name": "Guitar",
     "start": 8.5,
     "gain": 0.10,
@@ -45,7 +45,7 @@ playlist.load([
     }
   },
   {
-    "src": "media/Estefa/Voz_01.wav",
+    "src": "media/Estefa/Voz_01.mp3",
     "name": "Vocals",
     "start": 23.5,
     "customClass": "vocals",
@@ -56,7 +56,7 @@ playlist.load([
     "cuein": 15
   },
   {
-    "src": "media/Estefa/Voz_02.wav",
+    "src": "media/Estefa/Voz_02.mp3",
     "name": "Vocals",
     "start": 23.5,
     "customClass": "vocals",
