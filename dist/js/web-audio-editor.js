@@ -19,7 +19,7 @@ var playlist = WaveformPlaylist.init({
 
 playlist.load([
   {
-    "src": "media/Estefa/Acustica_00.mp3",
+    "src": "media/Estefa/acustica_1.mp3",
     "name": "Guitar",
     "fadeIn": {
       "duration": 0.5
@@ -31,10 +31,9 @@ playlist.load([
     "waveOutlineColor": '#c0dce0'
   },
   {
-    "src": "media/Estefa/Acustica_01.mp3",
-    "name": "Guitar",
-    "start": 8.5,
-    "gain": 0.10,
+    "src": "media/Estefa/acustica_2.mp3",
+    "name": "Guitar",   
+    "gain": 0.70,
     "fadeIn": {
       "shape": "logarithmic",
       "duration": 0.5
@@ -45,26 +44,13 @@ playlist.load([
     }
   },
   {
-    "src": "media/Estefa/Voz_01.mp3",
-    "name": "Vocals",
-    "start": 23.5,
+    "src": "media/Estefa/voz.mp3",
+    "name": "Vocals",    
     "customClass": "vocals",
     "fadeOut": {
       "shape": "linear",
       "duration": 0.5
-    },
-    "cuein": 15
-  },
-  {
-    "src": "media/Estefa/Voz_02.mp3",
-    "name": "Vocals",
-    "start": 23.5,
-    "customClass": "vocals",
-    "fadeOut": {
-      "shape": "linear",
-      "duration": 0.5
-    },
-    "cuein": 15
+    }
   }
 ]).then(function() {
   //can do stuff with the playlist.
