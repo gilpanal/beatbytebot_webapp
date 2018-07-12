@@ -357,7 +357,9 @@ ee.on("audiosourcesloaded", function() {
   displayLoadingData("Tracks have all finished decoding.");
 });
 
-ee.on("audiosourcesrendered", function() {
+ee.on("audiosourcesrendered", function() { 
+  var loaderElement = document.getElementById("loader");
+  loaderElement.classList.remove("loader");
   displayLoadingData("Tracks have been rendered");
 });
 
