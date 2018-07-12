@@ -1,6 +1,7 @@
 /node_modules
-.DS_Store
 /lib
 package-lock.json
-
+/dist/songs/**
+!/dist/songs/Estefa/**
+.DS_Store
 
