@@ -21,36 +21,17 @@ playlist.load([
   {
     "src": window.location.origin+ "/songs/Estefa/media/V_0/acustica_1.mp3",
     "name": "Guitar",
-    "fadeIn": {
-      "duration": 0.5
-    },
-    "fadeOut": {
-      "duration": 0.5
-    },    
-    
     "waveOutlineColor": '#c0dce0'
   },
   {
     "src": window.location.origin+"/songs/Estefa/media/V_0/acustica_2.mp3",
     "name": "Guitar",   
-    "gain": 0.70,
-    "fadeIn": {
-      "shape": "logarithmic",
-      "duration": 0.5
-    },
-    "fadeOut": {
-      "shape": "logarithmic",
-      "duration": 0.5
-    }
+    "gain": 0.70
   },
   {
     "src": window.location.origin+"/songs/Estefa/media/V_0/voz.mp3",
     "name": "Vocals",    
-    "customClass": "vocals",
-    "fadeOut": {
-      "shape": "linear",
-      "duration": 0.5
-    }
+    "customClass": "vocals"   
   }
 ]).then(function() {
   //can do stuff with the playlist.
