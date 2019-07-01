@@ -4,4 +4,5 @@ package-lock.json
 /dist/songs/**
 !/dist/songs/Estefa/**
 .DS_Store
+/.firebase
 
