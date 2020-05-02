@@ -64,6 +64,7 @@ dbRef.child(`songs/${songId}`).once('value').then((snapshot) => {
   console.log('Failed :', error);
 })
 .finally(() => {
+  let errorIs = null;
   document.title = songName;
   if (lyricsHtml) {
     document.getElementById('post-header').insertAdjacentHTML('afterbegin', lyricsHtml);
@@ -71,5 +72,14 @@ dbRef.child(`songs/${songId}`).once('value').then((snapshot) => {
   document.getElementById('post-header').insertAdjacentHTML('afterbegin', songNameHtml);
   playlist.load(arrayLoad).then(() => {
     playlist.initExporter();
+  }).catch((error) => {
+    errorIs = error;
+  })
+  .finally(() => {
+    const loaderElement = document.getElementById('loader');
+    loaderElement.classList.remove('loader');
+    if (errorIs) {
+      alert(errorIs);
+    }
   });
 });
