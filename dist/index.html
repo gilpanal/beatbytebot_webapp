@@ -9,15 +9,14 @@
   <title>bunch of songs</title>
   <meta name="description" content="bunch of songs">
   
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/loader.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />   
+<link rel="stylesheet" href="/css/loader.css">
 </head>
 
 
   <body>
-
+    <input type="text" id="searchInput" onkeyup="searchSong()" placeholder="Search for names.." title="Search a song name" disabled>
     <header class="site-header">
 
   <ol class="breadcrumb">
@@ -49,6 +48,7 @@
   }
 </script>
 <script src="js/app.js"></script>
+<script src="js/search.js"></script>
   </body>
 
 </html>

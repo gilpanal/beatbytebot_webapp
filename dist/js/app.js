@@ -5,6 +5,7 @@ const dbRef = firebase.database().ref();
 
 
 let listElelemts = '';
+let errorIs = null;
 dbRef.child('songs').once('value').then((snapshot) => {
   const data = snapshot.val();
 
@@ -22,10 +23,15 @@ dbRef.child('songs').once('value').then((snapshot) => {
     });
   }
 }).catch((error) => {
-  console.log('Failed :', error);
+  errorIs = error;
 })
 .finally(() => {
   const loaderElement = document.getElementById('loader');
   loaderElement.classList.remove('loader');
   document.getElementById('card-deck').insertAdjacentHTML('afterbegin', listElelemts);
+  if (errorIs) {
+    alert(errorIs);
+  } else {
+    document.getElementById('searchInput').removeAttribute('disabled');
+  }
 });
