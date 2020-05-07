@@ -2,6 +2,9 @@
  * This script is provided to give an example how the playlist can be controlled using the event emitter.
  * This enables projects to create/control the useability of the project.
 */
+import {playlist} from './song'
+
+/* https://github.com/naomiaro/waveform-playlist/blob/master/dist/waveform-playlist/js/emitter.js */
 var ee = playlist.getEventEmitter();
 var $container = $("body");
 var $timeFormat = $container.find('.time-format');
@@ -357,7 +360,7 @@ ee.on("audiosourcesloaded", function() {
   displayLoadingData("Tracks have all finished decoding.");
 });
 
-ee.on("audiosourcesrendered", function() {   
+ee.on("audiosourcesrendered", function() {
   displayLoadingData("Tracks have been rendered");
 });
 
