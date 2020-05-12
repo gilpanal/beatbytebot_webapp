@@ -1,38 +1,63 @@
 import SONG_COVER from '../img/agp.png'
-import { CONFIG_FIREBASE } from './config'
-
-firebase.initializeApp(CONFIG_FIREBASE)
-const dbRef = firebase.database().ref()
+import { ENDPOINT } from '../js/config'
 
 let listElelemts = ''
 let errorIs = null
+let songs = []
+const query = `query GetSongs {
+  songs{id, title, photo {big_file_id}}
+}`
 
-dbRef.child('songs').once('value').then((snapshot) => {
-  const data = snapshot.val()
-
-  if (data) {
-    const keys = Object.keys(data)
-    keys.forEach((element) => {
-      const template = `
-        <div class="card">
-        <img class="card-img-top" src="${SONG_COVER}" alt="Card image cap">
-        <div class="card-body">
-        <h5 class="card-title"></h5>
-        <a href="../song/song.html?songId=${element}" class="card-link">${data[element].name}</a></div></div>
-        `
-      listElelemts += template
-    })
+fetch(ENDPOINT, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  body: JSON.stringify({
+    query,
+  })
+})
+.then((r) => {  
+  if(!r.ok){
+    errorIs = r.statusText
+  } 
+  return r.json()
+})
+.then(data => {
+  if (data.data && data.data.songs) {
+    songs = data.data.songs
   }
 }).catch((error) => {
-  errorIs = error
+  errorIs = error  
+}).finally(() => {
+  renderHomePage(songs, errorIs)
 })
-.finally(() => {
+
+const renderHomePage = (songsList, error) => {
+
   const loaderElement = document.getElementById('loader')
-  loaderElement.classList.remove('loader')
-  document.getElementById('card-deck').insertAdjacentHTML('afterbegin', listElelemts)
+  loaderElement.classList.remove('loader')  
+
   if (errorIs) {
     alert(errorIs)
   } else {
-    document.getElementById('searchInput').removeAttribute('disabled')
+    paintListOfSongs(songsList)
   }
-})
+}
+
+const paintListOfSongs = (songsList) => {
+
+  songsList.forEach((element) => {
+    const template = `
+      <div class="card">
+      <img class="card-img-top" src="${SONG_COVER}" alt="Card image cap">
+      <div class="card-body">
+      <h5 class="card-title"></h5>
+      <a href="../song/song.html?songId=${element.id}" class="card-link">${element.title}</a></div></div>
+      `
+    listElelemts += template
+  })
+  document.getElementById('card-deck').insertAdjacentHTML('afterbegin', listElelemts)
+  document.getElementById('searchInput').removeAttribute('disabled')
+}
