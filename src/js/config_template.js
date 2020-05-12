@@ -1,5 +1,8 @@
 const MODE = 'DEV'
 
+// TELEGRAM BOT INFO: TOKEN, NAME
+// More info: https://core.telegram.org/bots#6-botfather
+
 // PROD
 
 const BOT_TOKEN_PROD = ''
