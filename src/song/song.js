@@ -31,10 +31,10 @@ let songName = 'No name'
 let songNameHtml = '<h1 class="post-title">No name</h1>'
 let lyricsHtml = null
 let errorIs = null
-let trackInfo = {}
+let tracksInfo = {}
 
 const query = `query GetTracks($songId: Float!) {
-  songInfoById(songId: $songId){title},tracks(songId: $songId){ message {date}, file_path}
+  songInfoById(songId: $songId){title, doc_url},tracks(songId: $songId){ message {date}, file_path}
 }`
 
 fetch(ENDPOINT, {
@@ -56,7 +56,7 @@ fetch(ENDPOINT, {
 })
 .then((data) => {  
   if(data.data){    
-    trackInfo = data.data
+    tracksInfo = data.data
   }
 })
 .catch((error) =>{
@@ -66,14 +66,14 @@ fetch(ENDPOINT, {
   if(errorIs){
     alert(errorIs)
   }
-  createArrayOfTracks(trackInfo)
-  drawSongDetailInfo(trackInfo)
+  createArrayOfTracks(tracksInfo)
+  drawSongDetailInfo(tracksInfo)
 })
 
-const createArrayOfTracks = (trackInfo) => {
-  if(trackInfo.tracks){
+const createArrayOfTracks = (tracksInfo) => {
+  if(tracksInfo.tracks){
     const arrayLoad = []
-    trackInfo.tracks.forEach((element) => {
+    tracksInfo.tracks.forEach((element) => {
       const newTrack = new Track(element.message.date, element.file_path)
       arrayLoad.push(newTrack)   
     })
@@ -96,10 +96,15 @@ const createTrackList = (arrayLoad) => {
     }
   })
 }
-const drawSongDetailInfo = (trackInfo) => {
-  if(trackInfo.songInfoById){
-    songName = trackInfo.songInfoById.title
-    songNameHtml = `<h1 class="post-title">${songName}</h1>`
+const drawSongDetailInfo = (tracksInfo) => {
+  const songInfo = tracksInfo.songInfoById
+  if(songInfo && songInfo.doc_url){    
+    lyricsHtml = `<a href="#" onclick="window.open('${songInfo.doc_url}', 'lyrics_popup', 'fullscreen=yes',false); return false">Lyrics</a>`
+    document.getElementById('post-header').insertAdjacentHTML('afterbegin', lyricsHtml) 
   }  
-  document.getElementById('post-header').insertAdjacentHTML('afterbegin', songNameHtml)
+  if(songInfo){
+    songName = songInfo.title
+    songNameHtml = `<h1 class="post-title">${songName}</h1>`    
+  } 
+  document.getElementById('post-header').insertAdjacentHTML('afterbegin', songNameHtml)  
 }
