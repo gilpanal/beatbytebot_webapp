@@ -78,6 +78,8 @@ const createArrayOfTracks = (tracksInfo) => {
       arrayLoad.push(newTrack)   
     })
     createTrackList(arrayLoad)
+  }else{
+    cancelLoader()
   } 
 }
 
@@ -89,8 +91,7 @@ const createTrackList = (arrayLoad) => {
     errorIs = error
   })
   .finally(() => {
-    const loaderElement = document.getElementById('loader')
-    loaderElement.classList.remove('loader')   
+    cancelLoader()   
     if (errorIs) {
       alert(errorIs)
     }
@@ -107,4 +108,9 @@ const drawSongDetailInfo = (tracksInfo) => {
     songNameHtml = `<h1 class="post-title">${songName}</h1>`    
   } 
   document.getElementById('post-header').insertAdjacentHTML('afterbegin', songNameHtml)  
+}
+
+const cancelLoader = () => {
+  const loaderElement = document.getElementById('loader')
+  loaderElement.classList.remove('loader') 
 }
