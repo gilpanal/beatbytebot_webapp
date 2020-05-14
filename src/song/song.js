@@ -34,7 +34,7 @@ let errorIs = null
 let tracksInfo = {}
 
 const query = `query GetTracks($songId: Float!) {
-  songInfoById(songId: $songId){title, doc_url},tracks(songId: $songId){ message {date}, file_path}
+  songInfoById(songId: $songId){title, doc_url},tracks(songId: $songId){ message {date, audio{title}}, file_path}
 }`
 
 fetch(ENDPOINT, {
@@ -74,7 +74,8 @@ const createArrayOfTracks = (tracksInfo) => {
   if(tracksInfo.tracks){
     const arrayLoad = []
     tracksInfo.tracks.forEach((element) => {
-      const newTrack = new Track(element.message.date, element.file_path)
+      const title = element?.message?.audio?.title || element.message.date
+      const newTrack = new Track(title, element.file_path)
       arrayLoad.push(newTrack)   
     })
     createTrackList(arrayLoad)
