@@ -4,9 +4,27 @@ import { ENDPOINT } from '../js/config'
 let listElelemts = ''
 let errorIs = null
 let songs = []
-const query = `query GetSongs {
+
+const queryString = window.location.search
+const urlParams = new URLSearchParams(queryString)
+let collectionName = urlParams.get('collection')
+
+let query = `query GetSongs {
   songs{id, title, photo_url, collection}
 }`
+let body = JSON.stringify({
+  query,  
+})
+if(collectionName){
+  collectionName = decodeURI(collectionName)
+  query = `query GetSongs($collectionName: String!) {
+    collection(collectionName: $collectionName){id, title, photo_url}
+  }`
+  body = JSON.stringify({
+    query,
+    variables: {collectionName},
+  })
+}
 
 fetch(ENDPOINT, {
   method: 'POST',
@@ -14,9 +32,7 @@ fetch(ENDPOINT, {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
-  body: JSON.stringify({
-    query,
-  })
+  body: body
 })
 .then((r) => {  
   if(!r.ok){
@@ -25,8 +41,8 @@ fetch(ENDPOINT, {
   return r.json()
 })
 .then(data => {
-  if (data.data && data.data.songs) {
-    songs = data.data.songs
+  if (data.data && data.data.songs || data.data.collection) {    
+    songs = data.data.songs || data.data.collection
   }
 }).catch((error) => {
   errorIs = error  
@@ -47,9 +63,11 @@ const renderHomePage = (songsList, error) => {
 }
 
 const paintListOfSongs = (songsList) => {
-
   songsList.forEach((element) => {
-    const collection = element.collection || ''
+    let collection = ''
+    if(element.collection){
+      collection = `<a href="./index.html?collection=${element.collection}" class="card-link text-info">${element.collection}</a>`
+    }    
     const template = `
       <div class="card">
       <img class="card-img-top" src="${element.photo_url || SONG_COVER}" alt="Card image cap">
