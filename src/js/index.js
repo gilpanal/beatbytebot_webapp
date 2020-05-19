@@ -5,7 +5,7 @@ let listElelemts = ''
 let errorIs = null
 let songs = []
 const query = `query GetSongs {
-  songs{id, title, photo_url}
+  songs{id, title, photo_url, collection}
 }`
 
 fetch(ENDPOINT, {
@@ -49,12 +49,16 @@ const renderHomePage = (songsList, error) => {
 const paintListOfSongs = (songsList) => {
 
   songsList.forEach((element) => {
+    const collection = element.collection || ''
     const template = `
       <div class="card">
       <img class="card-img-top" src="${element.photo_url || SONG_COVER}" alt="Card image cap">
       <div class="card-body">
       <h5 class="card-title"></h5>
-      <a href="../song/song.html?songId=${element.id}" class="card-link">${element.title}</a></div></div>
+      <a href="../song/song.html?songId=${element.id}" class="card-link">${element.title}</a><br>
+      ${collection}
+      </div>
+      </div>
       `
     listElelemts += template
   })
