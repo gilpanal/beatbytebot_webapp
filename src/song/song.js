@@ -27,8 +27,7 @@ function Track(title, link) {
 }
 
 const queryString = window.location.search
-const urlParams = new URLSearchParams(queryString)
-const songId = parseFloat(urlParams.get('songId'))
+const songId = parseFloat(queryString.split('songId=')[1])
 
 let songName = 'No name'
 let songNameHtml = '<h1 class="post-title">No name</h1>'
@@ -76,7 +75,7 @@ fetch(ENDPOINT, {
 .catch((error) =>{
   errorIs = error  
 })
-.finally (() =>{ 
+.then (() =>{ 
   if(errorIs){
     alert(errorIs)
   }
@@ -105,7 +104,7 @@ const createTrackList = (arrayLoad) => {
   }).catch((error) => {
     errorIs = error
   })
-  .finally(() => {
+  .then(() => {
     cancelLoader()   
     if (errorIs) {
       alert(errorIs)

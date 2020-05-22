@@ -46,7 +46,7 @@ fetch(ENDPOINT, {
   }
 }).catch((error) => {
   errorIs = error  
-}).finally(() => {
+}).then(() => {
   renderHomePage(songs, errorIs)
 })
 
@@ -70,7 +70,9 @@ const paintListOfSongs = (songsList) => {
     }    
     const template = `
       <div class="card">
-      <img class="card-img-top" src="${element.photo_url || SONG_COVER}" alt="Card image cap">
+      <a href="../song/song.html?songId=${element.id}">
+        <img class="card-img-top" src="${element.photo_url || SONG_COVER}" alt="Card image cap">
+      </a>
       <div class="card-body">
       <h5 class="card-title"></h5>
       <a href="../song/song.html?songId=${element.id}" class="card-link">${element.title}</a><br>
