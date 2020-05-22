@@ -1,6 +1,8 @@
 import { ENDPOINT } from '../js/config'
 import WaveformPlaylist from 'waveform-playlist'
 
+let userInfo = localStorage.getItem('telUser')
+
 export const playlist = WaveformPlaylist({
   samplesPerPixel: 3000,
   waveHeight: 100,
@@ -15,7 +17,8 @@ export const playlist = WaveformPlaylist({
     show: true,
     width: 200
   },
-  zoomLevels: [500, 1000, 3000, 5000]
+  zoomLevels: [500, 1000, 3000, 5000],
+  timescale: true
 })
 
 function Track(title, link) {
@@ -33,9 +36,23 @@ let lyricsHtml = null
 let errorIs = null
 let tracksInfo = {}
 
-const query = `query GetTracks($songId: Float!) {
+let query = `query GetTracks($songId: Float!) {
   songInfoById(songId: $songId){title, doc_url},tracks(songId: $songId){ message {date, audio{title}}, file_path}
 }`
+let body = JSON.stringify({
+  query,
+  variables: { songId }, 
+})
+if(userInfo){
+  userInfo = JSON.parse(userInfo)
+  query = `query GetTracks($songId: Float!, $userInfo: UserInfo) {
+    songInfoById(songId: $songId, userInfo: $userInfo ){title, doc_url, user_permission},tracks(songId: $songId){ message {date, audio{title}}, file_path}
+  }`
+  body = JSON.stringify({
+    query,
+    variables: { songId, userInfo }, 
+  })
+}
 
 fetch(ENDPOINT, {
   method: 'POST',
@@ -43,10 +60,7 @@ fetch(ENDPOINT, {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
-  body: JSON.stringify({
-    query,
-    variables: { songId, songId },
-  })
+  body: body
 })
 .then((r) => {  
   if(!r.ok){
@@ -98,7 +112,9 @@ const createTrackList = (arrayLoad) => {
     }
   })
 }
-const drawSongDetailInfo = (tracksInfo) => {
+const drawSongDetailInfo = (tracksInfo) => { 
+  //const isAdmin = tracksInfo.songInfoById && tracksInfo.songInfoById.user_permission
+  
   const songInfo = tracksInfo.songInfoById
   if(songInfo && songInfo.doc_url){    
     lyricsHtml = `<a href="#" onclick="window.open('${songInfo.doc_url}', 'lyrics_popup', 'fullscreen=yes',false); return false">Lyrics</a>`

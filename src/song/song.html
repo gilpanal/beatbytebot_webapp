@@ -21,6 +21,7 @@
         <ol class="breadcrumb">
             <li><a href="/index.html">bunch of songs</a></li>
         </ol>
+        <div id="telegram-login"></div>
     </header>
 
     <a href="https://github.com/gilpanal/bunchofsongs"
@@ -48,6 +49,9 @@
                                 <span class="btn-stop btn btn-danger">
                                     <i class="fa fa-stop"></i>
                                 </span>
+                                <!--<span class="btn-record btn btn-danger disabled">
+                                    <i class="fa fa-microphone"></i>
+                                </span>-->
                                 <span class="btn-rewind btn btn-success">
                                     <i class="fa fa-fast-backward"></i>
                                 </span>
@@ -90,6 +94,7 @@
                                     class="btn-trim-audio btn btn-primary disabled">Trim</span>
                             </div>
                             <div class="btn-group">
+                                <!-- <span title="Clear the playlist's tracks" class="btn btn-delete-track btn-danger">Clear</span>-->
                                 <span title="Download the current work as Wav file"
                                     class="btn btn-download btn-primary">
                                     <i class="fa fa-download"></i>
@@ -99,6 +104,7 @@
                     </div>
 
                     <div id="playlist"></div>
+                    <span class="audio-pos">00:00:00.0</span>
                     <div id="loader" class="loader"></div>
 
                     <div class="playlist-bottom-bar">
@@ -108,6 +114,17 @@
                                 <label for="master-gain">Master Volume</label>
                                 <input type="range" min="0" max="100" value="100" class="master-gain form-control"
                                     id="master-gain">
+                                <select class="time-format form-control">
+                                    <option value="seconds">seconds</option>
+                                    <option value="thousandths">thousandths</option>
+                                    <option value="hh:mm:ss">hh:mm:ss</option>
+                                    <option value="hh:mm:ss.u">hh:mm:ss + tenths</option>
+                                    <option value="hh:mm:ss.uu">hh:mm:ss + hundredths</option>
+                                    <option value="hh:mm:ss.uuu" selected="selected">hh:mm:ss + milliseconds</option>
+                                </select>
+                                <input type="text" class="audio-start input-small form-control">
+                                <input type="text" class="audio-end form-control">
+                                <!-- <label class="audio-pos">00:00:00.0</label> -->
                             </div>
                             <div class="checkbox">
                                 <label>
@@ -119,11 +136,13 @@
                         <div class="sound-status"></div>
                         <div class="track-drop"></div>
                     </div>
+                    <!-- <div class="loading-data"></div> -->
                 </div>
             </article>
         </div>
     </div>
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="../js/telegramlogin.js"></script>
     <script src="eventemitter.js"></script>
 </body>
 

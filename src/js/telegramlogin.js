@@ -1,22 +1,7 @@
-import { BOT_TOKEN, BOT_NAME } from './config'
-import { createHash, createHmac } from 'crypto'
+import { BOT_NAME } from './config'
 
-/* https://gist.github.com/Pitasi/574cb19348141d7bf8de83a0555fd2dc */
-const secret = createHash('sha256').update(BOT_TOKEN).digest()
-
-const checkSignature = ({ hash, ...data }) => {
-  const checkString = Object.keys(data)
-    .sort()
-    .map(k => (`${k}=${data[k]}`))
-    .join('\n')
-  const hmac = createHmac('sha256', secret)
-    .update(checkString)
-    .digest('hex')
-  return hmac === hash
-}
-const handleTelegramResponse = (response) => {
-  console.log(response)
-  console.log(checkSignature(response))   
+const handleTelegramResponse = (response) => {  
+  localStorage.setItem('telUser', JSON.stringify(response))
 }
   
 window.TelegramLoginWidget = {
