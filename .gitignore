@@ -5,3 +5,4 @@ package-lock.json
 /dist
 /.cache
 src/js/config.js
+src/demoaudio/vocal.mp3

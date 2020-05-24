@@ -1,4 +1,6 @@
 import { ENDPOINT } from '../js/config'
+//import demotrack from '../demoaudio/vocal.mp3'
+import { TrackHandler } from './track_handler'
 import WaveformPlaylist from 'waveform-playlist'
 
 let userInfo = localStorage.getItem('telUser')
@@ -21,11 +23,14 @@ export const playlist = WaveformPlaylist({
   timescale: true
 })
 
-function Track(title, link) {
+function Track(title, link, customClass) {
   this.name = title
   this.src = `https://cors-anywhere.herokuapp.com/${link}`
+  //this.src = link // to test local demotrack
+  this.customClass = customClass
 }
 
+const trackHandler = new TrackHandler(playlist)
 const queryString = window.location.search
 const songId = parseFloat(queryString.split('songId=')[1])
 
@@ -36,7 +41,7 @@ let errorIs = null
 let tracksInfo = {}
 
 let query = `query GetTracks($songId: Float!) {
-  songInfoById(songId: $songId){title, doc_url},tracks(songId: $songId){ message {date, audio{title}}, file_path}
+  songInfoById(songId: $songId){title, doc_url},tracks(songId: $songId){ id, message {message_id, date, audio{title, file_unique_id}, voice{file_unique_id}}, file_path}
 }`
 let body = JSON.stringify({
   query,
@@ -45,7 +50,7 @@ let body = JSON.stringify({
 if(userInfo){
   userInfo = JSON.parse(userInfo)
   query = `query GetTracks($songId: Float!, $userInfo: UserInfo) {
-    songInfoById(songId: $songId, userInfo: $userInfo ){title, doc_url, user_permission},tracks(songId: $songId){ message {date, audio{title}}, file_path}
+    songInfoById(songId: $songId, userInfo: $userInfo ){title, doc_url, user_permission},tracks(songId: $songId){ id, message {message_id, date, audio{title, file_unique_id}, voice{file_unique_id}}, file_path}
   }`
   body = JSON.stringify({
     query,
@@ -84,20 +89,25 @@ fetch(ENDPOINT, {
 })
 
 const createArrayOfTracks = (tracksInfo) => {
+  const isAdmin = tracksInfo.songInfoById && tracksInfo.songInfoById.user_permission  
   if(tracksInfo.tracks){
     const arrayLoad = []
     tracksInfo.tracks.forEach((element) => {
-      const title = element?.message?.audio?.title || element.message.date
-      const newTrack = new Track(title, element.file_path)
+      const audio = element?.message?.audio || element?.message?.voice    
+      const title = audio.title || element.message.date
+      const track_id=  audio.file_unique_id + '_' + element.message.date      
+      const customClass = {chatId: songId, message_id:element.message.message_id, name: title, track_id:track_id }
+      const newTrack = new Track(title, element.file_path , customClass)
+      //const newTrack = new Track(title, demotrack , customClass) // to test local demo track
       arrayLoad.push(newTrack)   
     })
-    createTrackList(arrayLoad)
+    createTrackList(arrayLoad, isAdmin)
   }else{
     cancelLoader()
   } 
 }
 
-const createTrackList = (arrayLoad) => {
+const createTrackList = (arrayLoad, isAdmin) => {
   let errorIs = null
   playlist.load(arrayLoad).then(() => {
     playlist.initExporter()
@@ -108,12 +118,15 @@ const createTrackList = (arrayLoad) => {
     cancelLoader()   
     if (errorIs) {
       alert(errorIs)
+    } else {      
+      if(isAdmin){
+        trackHandler.displayOptMenuForTracks() 
+      }
     }
   })
 }
 const drawSongDetailInfo = (tracksInfo) => { 
-  //const isAdmin = tracksInfo.songInfoById && tracksInfo.songInfoById.user_permission
-  
+
   const songInfo = tracksInfo.songInfoById
   if(songInfo && songInfo.doc_url){    
     lyricsHtml = `<a href="#" onclick="window.open('${songInfo.doc_url}', 'lyrics_popup', 'fullscreen=yes',false); return false">Lyrics</a>`
