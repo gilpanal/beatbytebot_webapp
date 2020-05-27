@@ -11,7 +11,7 @@ const searchSong = () => {
     const ul = document.getElementById('card-deck')
     const li = ul.getElementsByClassName('card')    
     for (let i = 0; i < li.length; i++) {
-      const a = li[i].getElementsByTagName('a')[0]
+      const a = li[i].getElementsByTagName('a')[1]
       const txtValue = a.textContent || a.innerText
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         li[i].style.display = ''
