@@ -1,8 +1,10 @@
 import { ENDPOINT } from '../js/config'
 //import demotrack from '../demoaudio/vocal.mp3'
 import { TrackHandler } from './track_handler'
+import { FileUploader } from './fileuploader'
 import WaveformPlaylist from 'waveform-playlist'
 
+const LOADER_ELEM_ID = 'loader'
 let userInfo = localStorage.getItem('telUser')
 
 export const playlist = WaveformPlaylist({
@@ -33,6 +35,7 @@ function Track(title, link, customClass) {
 const trackHandler = new TrackHandler(playlist)
 const queryString = window.location.search
 const songId = parseFloat(queryString.split('songId=')[1])
+const fileUploader = new FileUploader(userInfo, songId, trackHandler, LOADER_ELEM_ID)
 
 let songName = 'No name'
 let songNameHtml = '<h1 class="post-title">No name</h1>'
@@ -90,6 +93,9 @@ fetch(ENDPOINT, {
 
 const createArrayOfTracks = (tracksInfo) => {
   const isAdmin = tracksInfo.songInfoById && tracksInfo.songInfoById.user_permission  
+  if(isAdmin){    
+    fileUploader.enableUpload()
+  }
   if(tracksInfo.tracks){
     const arrayLoad = []
     tracksInfo.tracks.forEach((element) => {
@@ -140,6 +146,6 @@ const drawSongDetailInfo = (tracksInfo) => {
 }
 
 const cancelLoader = () => {
-  const loaderElement = document.getElementById('loader')
-  loaderElement.classList.remove('loader') 
+  const loaderElement = document.getElementById(LOADER_ELEM_ID)
+  loaderElement.classList.remove(LOADER_ELEM_ID) 
 }
