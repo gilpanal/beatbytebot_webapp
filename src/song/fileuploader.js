@@ -18,9 +18,6 @@ export class FileUploader {
 
         dropContainer.ondrop = (evt) => {            
             fileInput.files = evt.dataTransfer.files
-            const dT = new DataTransfer()
-            dT.items.add(evt.dataTransfer.files[0])
-            fileInput.files = dT.files             
             this.fileReader(fileInput.files[0])   
             evt.preventDefault()
         }
