@@ -1,4 +1,6 @@
-import { ENDPOINT } from '../js/config'
+import { doFetch } from './song_helper'
+import { USER_INFO } from './song'
+
 export class TrackHandler {
     constructor(playlist) {
         this.playlist = playlist
@@ -29,29 +31,26 @@ export class TrackHandler {
             listOptionsItem.dataset.trackId = arrayTracks[i].customClass.track_id
             listOptionsItem.dataset.chatId = arrayTracks[i].customClass.chatId
             listOptionsItem.onclick = (event) => {
-                this.deleteTrackConfirmDialog(event, this.sendDeleteRequest)
+                this.deleteTrackConfirmDialog(event, this.sendDeleteRequest, this.doAfterDeleted)
             }
             listOptionsItem.appendChild(document.createTextNode('Delete'))
             listOptions.appendChild(listOptionsItem)
             document.getElementById(menuBtnId).appendChild(listOptions)
         }
     }
-    deleteTrackConfirmDialog(event, callback) {
+    deleteTrackConfirmDialog(event, callback, afterCallback) {
 
         const dialog = confirm('Delete ' + event.target.dataset.name + '?')
         if (dialog) {
-            callback(event.target.dataset.chatId, event.target.id, event.target.dataset.trackId)
+            callback(event.target.dataset.chatId, event.target.id, event.target.dataset.trackId, afterCallback)
         }
     }
-    sendDeleteRequest(chat_id, message_id, track_id) {
-        const me = this
+    sendDeleteRequest(chat_id, message_id, track_id, doAfterDeleted) {
+   
         chat_id = parseFloat(chat_id)
         message_id = parseInt(message_id)
 
-        let errorIs = null
-        let deleteTrackResult = {}
-        let userInfo = localStorage.getItem('telUser')
-        userInfo = JSON.parse(userInfo)
+        const userInfo = JSON.parse(USER_INFO)
 
         const query = `query DeleteTrack($chat_id: Float!, $message_id: Int!, $track_id: String!, $userInfo: UserInfo!) {
             deleteMessage(chat_id: $chat_id, message_id: $message_id, track_id: $track_id, userInfo: $userInfo ){ ok, description }
@@ -60,38 +59,12 @@ export class TrackHandler {
             query,
             variables: { chat_id, message_id, track_id, userInfo },
         })
-        fetch(ENDPOINT, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: body
-        })
-        .then((r) => {
-            if (!r.ok) {
-                errorIs = r.statusText
-            }
-            return r.json()
-        })
-        .then((data) => {
-            
-            // data.errors[0].message => check error
-            if (data.data) {
-                deleteTrackResult = data.data
-            }
-        })
-        .catch((error) => {            
-            errorIs = error
-        })
-        .then(() => {
-            if (errorIs) {
-                alert(errorIs)
-            } else {
-                if (deleteTrackResult.deleteMessage.ok) {
-                    alert('Track deleted successfully!')                    
-                }
-            }
-        })
+
+        doFetch(body, doAfterDeleted)       
+    }
+    doAfterDeleted (deleteTrackResult){
+        if (deleteTrackResult.deleteMessage && deleteTrackResult.deleteMessage.ok) {
+            alert('Track deleted successfully!')                    
+        }
     }
 }

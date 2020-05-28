@@ -1,5 +1,9 @@
 import SONG_COVER from '../img/agp.png'
 import { ENDPOINT } from '../js/config'
+import { TelegramLogin } from './telegramlogin'
+
+const telegramLogin = new TelegramLogin()
+telegramLogin.init()
 
 let listElelemts = ''
 let errorIs = null

@@ -2,10 +2,10 @@
 /* https://stackoverflow.com/a/38968948 */
 
 import { UPLOAD_ENDPOINT } from '../js/config'
+import { USER_INFO } from './song'
 
 export class FileUploader {
-    constructor(userInfo, chatId, trackhandler, loaderElementId) {
-        this.userInfo = userInfo
+    constructor(chatId, trackhandler, loaderElementId) {       
         this.chatId = chatId
         this.trackhandler = trackhandler
         this.loaderElementId = loaderElementId
@@ -63,16 +63,19 @@ export class FileUploader {
         const formData = new FormData()
         formData.append(chatField.name, chatField.value)
         formData.append(file.dom.name, file.dom.files[0], file.dom.files[0].name)      
-        formData.append('user_info', this.userInfo)  
+        formData.append('user_info', USER_INFO)  
         
         XHR.addEventListener('load', (event) => {                     
             this.cancelLoader()
-            if(event.srcElement.response === 'Error'){
-                alert('Oops! Something went wrong.')
+            if(event.srcElement && event.srcElement.response){
+                const respJson = JSON.parse(event.srcElement.response)
+                if(respJson.ok){
+                    alert('Yeah! Data sent and response loaded.')
+                } else {
+                    alert('Oops! Something went wrong.')
+                }                
             } else {
-                // TODO: enable Menu Opts for this track
-                //console.log(event.srcElement.response)
-                alert('Yeah! Data sent and response loaded.')           
+                alert('Oops! Something went wrong.')                          
             }            
         })
         
