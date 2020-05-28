@@ -6,11 +6,11 @@ const BOT_NAME_PROD = ''
 const BASE_ENDPOINT_PROD = ''
 const UPLOAD_ENDPOINT_PROD = ''
 
-// DEV
-  
+// DEV 
+
 const BOT_NAME_DEV = ''
-const BASE_ENDPOINT_DEV = ''
-const UPLOAD_ENDPOINT_DEV = ''
+const BASE_ENDPOINT_DEV = 'http://localhost:8080/graphql'
+const UPLOAD_ENDPOINT_DEV = 'http://localhost:8080/fileUpload'
 
 
 export const BOT_NAME = (MODE === 'PROD') ? BOT_NAME_PROD : BOT_NAME_DEV

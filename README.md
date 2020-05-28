@@ -8,5 +8,9 @@ A new concept for collaborative music
 3. npm run dev
 4. Open 127.0.0.1/index.html
 
+NOTE:
+- API for local development -> https://github.com/gilpanal/bunchofsongs_api
+- BOT for local development -> https://github.com/gilpanal/bunchofsongs_bot
+
 Thanks to:
 https://github.com/naomiaro/waveform-playlist
