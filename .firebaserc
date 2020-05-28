@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "bunchofsongs-dac0c"
+  },
+  "targets": {
+    "bunchofsongs-dac0c": {
+      "hosting": {
+        "prod": [
+          "bunchofsongs"
+        ],
+        "stage": [
+          "bunchofsongs-dac0c"
+        ]
+      }
+    }
   }
 }
