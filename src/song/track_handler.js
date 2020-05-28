@@ -1,9 +1,19 @@
 import { doFetch } from './song_helper'
-import { USER_INFO } from './song'
+import { USER_INFO, SONG_ID } from './song'
 
 export class TrackHandler {
     constructor(playlist) {
         this.playlist = playlist
+    }
+    displayOptMenuForNewTrack(newTrack){        
+        const element = newTrack.result
+        const audio = element?.message?.audio || element?.message?.voice
+        const title = audio.title || element.message.date
+        const track_id = audio.file_unique_id + '_' + element.message.date
+        const controlsList = document.getElementsByClassName('controls')
+        const message_id = element.message.message_id
+        const pos = controlsList.length - 1  
+        this.createMenuOptButton(controlsList, pos, message_id, title, track_id, SONG_ID)
     }
     displayOptMenuForTracks() {
 
@@ -11,32 +21,41 @@ export class TrackHandler {
         const arrayTracks = this.playlist.getInfo()
 
         for (let i = 0; i < controlsList.length; i++) {
-            const menuBtnId = 'menuoptbtn-' + i
-            const menuDrpDownId = 'menuDropdown' + i
-            const span = document.createElement('span')
-            const txt = document.createTextNode('...')
-            span.className = 'menuoptbtn'
-            span.onclick = () => {
-                document.getElementById(menuDrpDownId).classList.toggle('show')
-            }
-            span.id = menuBtnId
-            span.appendChild(txt)
-            controlsList[i].appendChild(span)
-            const listOptions = document.createElement('ul')
-            listOptions.id = menuDrpDownId
-            listOptions.className = 'dropdown-content'
-            const listOptionsItem = document.createElement('li')
-            listOptionsItem.id = arrayTracks[i].customClass.message_id
-            listOptionsItem.dataset.name = arrayTracks[i].customClass.name
-            listOptionsItem.dataset.trackId = arrayTracks[i].customClass.track_id
-            listOptionsItem.dataset.chatId = arrayTracks[i].customClass.chatId
-            listOptionsItem.onclick = (event) => {
-                this.deleteTrackConfirmDialog(event, this.sendDeleteRequest, this.doAfterDeleted)
-            }
-            listOptionsItem.appendChild(document.createTextNode('Delete'))
-            listOptions.appendChild(listOptionsItem)
-            document.getElementById(menuBtnId).appendChild(listOptions)
+            if(arrayTracks[i].customClass){
+                const message_id = arrayTracks[i].customClass.message_id
+                const name = arrayTracks[i].customClass.name
+                const track_id = arrayTracks[i].customClass.track_id
+                const chatId = arrayTracks[i].customClass.chatId
+                this.createMenuOptButton(controlsList, i, message_id, name, track_id, chatId)
+            }            
         }
+    }
+    createMenuOptButton(controlsList, pos, message_id, name, track_id, chatId){
+        const menuBtnId = 'menuoptbtn-' + pos
+        const menuDrpDownId = 'menuDropdown' + pos
+        const span = document.createElement('span')
+        const txt = document.createTextNode('...')
+        span.className = 'menuoptbtn'
+        span.onclick = () => {
+            document.getElementById(menuDrpDownId).classList.toggle('show')
+        }
+        span.id = menuBtnId
+        span.appendChild(txt)
+        controlsList[pos].appendChild(span)
+        const listOptions = document.createElement('ul')
+        listOptions.id = menuDrpDownId
+        listOptions.className = 'dropdown-content'
+        const listOptionsItem = document.createElement('li')
+        listOptionsItem.id = message_id
+        listOptionsItem.dataset.name = name
+        listOptionsItem.dataset.trackId = track_id
+        listOptionsItem.dataset.chatId = chatId
+        listOptionsItem.onclick = (event) => {
+            this.deleteTrackConfirmDialog(event, this.sendDeleteRequest, this.doAfterDeleted)
+        }
+        listOptionsItem.appendChild(document.createTextNode('Delete'))
+        listOptions.appendChild(listOptionsItem)
+        document.getElementById(menuBtnId).appendChild(listOptions)
     }
     deleteTrackConfirmDialog(event, callback, afterCallback) {
 

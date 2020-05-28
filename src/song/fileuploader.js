@@ -2,7 +2,7 @@
 /* https://stackoverflow.com/a/38968948 */
 
 import { UPLOAD_ENDPOINT } from '../js/config'
-import { USER_INFO } from './song'
+import { USER_INFO, trackHandler } from './song'
 
 export class FileUploader {
     constructor(chatId, trackhandler, loaderElementId) {       
@@ -70,7 +70,7 @@ export class FileUploader {
             if(event.srcElement && event.srcElement.response){
                 const respJson = JSON.parse(event.srcElement.response)
                 if(respJson.ok){
-                    alert('Yeah! Data sent and response loaded.')
+                    trackHandler.displayOptMenuForNewTrack(respJson)                    
                 } else {
                     alert('Oops! Something went wrong.')
                 }                
