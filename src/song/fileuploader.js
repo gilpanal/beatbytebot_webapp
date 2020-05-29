@@ -2,7 +2,8 @@
 /* https://stackoverflow.com/a/38968948 */
 
 import { UPLOAD_ENDPOINT } from '../js/config'
-import { USER_INFO, trackHandler } from './song'
+import { USER_INFO, LOADER_ELEM_ID, trackHandler } from './song'
+import { startLoader, cancelLoader } from './song_helper'
 
 export class FileUploader {
     constructor(chatId, trackhandler, loaderElementId) {       
@@ -66,7 +67,7 @@ export class FileUploader {
         formData.append('user_info', USER_INFO)  
         
         XHR.addEventListener('load', (event) => {                     
-            this.cancelLoader()
+            cancelLoader(LOADER_ELEM_ID)
             if(event.srcElement && event.srcElement.response){
                 const respJson = JSON.parse(event.srcElement.response)
                 if(respJson.ok){
@@ -80,20 +81,12 @@ export class FileUploader {
         })
         
         XHR.addEventListener('error', (event) => {
-            this.cancelLoader()
+            cancelLoader(LOADER_ELEM_ID)
             alert('Oops! Something went wrong.')
         })
        
         XHR.open('POST', UPLOAD_ENDPOINT)                
         XHR.send(formData)      
-        this.startLoader()
-    }
-    startLoader() {
-        const loaderElement = document.getElementById(this.loaderElementId)
-        loaderElement.classList.add(this.loaderElementId) 
-    }
-    cancelLoader() {
-        const loaderElement = document.getElementById(this.loaderElementId)
-        loaderElement.classList.remove(this.loaderElementId) 
+        startLoader(LOADER_ELEM_ID)
     }
 }

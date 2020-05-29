@@ -9,7 +9,7 @@ function Track(title, link, customClass) {
     this.customClass = customClass
 }
 
-export const doFetch = (body, callback) => {
+export const doFetch = (body, callback, extraParams) => {
 
     let errorIs = null
     let tracksInfo = {}
@@ -40,7 +40,7 @@ export const doFetch = (body, callback) => {
         if (errorIs) {
             alert(errorIs)
         }
-        callback(tracksInfo)
+        callback(tracksInfo, extraParams)
     })
 
 }
@@ -64,7 +64,12 @@ export const telegramLoginCallback = (telegramUser) => {
     doFetch(body, successfulLoginAtPage)
 }
 
-const cancelLoader = (loaderId) => {
+export const startLoader = (loaderId) => {
+    const loaderElement = document.getElementById(loaderId)
+    loaderElement.classList.add(loaderId) 
+}
+
+export const cancelLoader = (loaderId) => {
     const loaderElement = document.getElementById(loaderId)
     loaderElement.classList.remove(loaderId)
 }

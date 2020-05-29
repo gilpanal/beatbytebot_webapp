@@ -1,10 +1,7 @@
-import { doFetch } from './song_helper'
-import { USER_INFO, SONG_ID } from './song'
+import { doFetch, startLoader, cancelLoader } from './song_helper'
+import { USER_INFO, SONG_ID, LOADER_ELEM_ID, playlist } from './song'
 
 export class TrackHandler {
-    constructor(playlist) {
-        this.playlist = playlist
-    }
     displayOptMenuForNewTrack(newTrack){        
         const element = newTrack.result
         const audio = element?.message?.audio || element?.message?.voice
@@ -18,7 +15,7 @@ export class TrackHandler {
     displayOptMenuForTracks() {
 
         const controlsList = document.getElementsByClassName('controls')
-        const arrayTracks = this.playlist.getInfo()
+        const arrayTracks = playlist.getInfo()
 
         for (let i = 0; i < controlsList.length; i++) {
             if(arrayTracks[i].customClass){
@@ -47,6 +44,7 @@ export class TrackHandler {
         listOptions.className = 'dropdown-content'
         const listOptionsItem = document.createElement('li')
         listOptionsItem.id = message_id
+        listOptionsItem.dataset.pos = pos
         listOptionsItem.dataset.name = name
         listOptionsItem.dataset.trackId = track_id
         listOptionsItem.dataset.chatId = chatId
@@ -61,10 +59,10 @@ export class TrackHandler {
 
         const dialog = confirm('Delete ' + event.target.dataset.name + '?')
         if (dialog) {
-            callback(event.target.dataset.chatId, event.target.id, event.target.dataset.trackId, afterCallback)
+            callback(event.target.dataset.pos, event.target.dataset.chatId, event.target.id, event.target.dataset.trackId, afterCallback)
         }
     }
-    sendDeleteRequest(chat_id, message_id, track_id, doAfterDeleted) {
+    sendDeleteRequest(pos, chat_id, message_id, track_id, doAfterDeleted) {
    
         chat_id = parseFloat(chat_id)
         message_id = parseInt(message_id)
@@ -78,12 +76,14 @@ export class TrackHandler {
             query,
             variables: { chat_id, message_id, track_id, userInfo },
         })
-
-        doFetch(body, doAfterDeleted)       
+        startLoader(LOADER_ELEM_ID)
+        doFetch(body, doAfterDeleted, pos)       
     }
-    doAfterDeleted (deleteTrackResult){
-        if (deleteTrackResult.deleteMessage && deleteTrackResult.deleteMessage.ok) {
-            alert('Track deleted successfully!')                    
+    doAfterDeleted (deleteTrackResult, pos){
+        cancelLoader(LOADER_ELEM_ID)
+        if (deleteTrackResult.deleteMessage && deleteTrackResult.deleteMessage.ok) {                       
+            const index = parseInt(pos)                     
+            playlist.clear(index)                           
         }
     }
 }

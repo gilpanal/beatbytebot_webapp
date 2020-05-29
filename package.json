@@ -1,6 +1,6 @@
 {
   "name": "bunchofsongs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Simple Web DAW connected to Telegram Bot",
   "main": "index.js",
   "author": "gilpanal",
