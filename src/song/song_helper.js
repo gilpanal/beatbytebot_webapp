@@ -1,10 +1,10 @@
 //import demotrack from '../demoaudio/vocal.mp3'
-import { ENDPOINT } from '../js/config'
+import { ENDPOINT, CORS_ENDPOINT } from '../js/config'
 import { LOADER_ELEM_ID, SONG_ID, setUser, trackHandler, fileUploader, playlist } from './song'
 
 function Track(title, link, customClass) {
     this.name = title
-    this.src = `https://cors-anywhere.herokuapp.com/${link}`
+    this.src = CORS_ENDPOINT+ link
     //this.src = link // to test local demotrack
     this.customClass = customClass
 }
