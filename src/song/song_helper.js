@@ -1,11 +1,9 @@
-//import demotrack from '../demoaudio/vocal.mp3'
 import { ENDPOINT, CORS_ENDPOINT } from '../js/config'
 import { LOADER_ELEM_ID, SONG_ID, setUser, trackHandler, fileUploader, playlist } from './song'
 
 function Track(title, link, customClass) {
     this.name = title
-    this.src = CORS_ENDPOINT+ link
-    //this.src = link // to test local demotrack
+    this.src = CORS_ENDPOINT+ link    
     this.customClass = customClass
 }
 
@@ -94,8 +92,7 @@ const createArrayOfTracks = (tracksInfo) => {
             const title = audio.title || element.message.date
             const track_id = audio.file_unique_id + '_' + element.message.date
             const customClass = { chatId: SONG_ID, message_id: element.message.message_id, name: title, track_id: track_id }
-            const newTrack = new Track(title, element.file_path , customClass)
-            //const newTrack = new Track(title, demotrack, customClass) // to test local demo track
+            const newTrack = new Track(title, element.file_path , customClass)            
             arrayLoad.push(newTrack)
         })
         createTrackList(arrayLoad, isAdmin)
