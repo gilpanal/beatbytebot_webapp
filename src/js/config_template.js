@@ -1,14 +1,14 @@
-const MODE = 'DEV'
+const MODE = 'PROD'
 const DEVPORT = 8080
 
-// PROD
+// PROD CONFIG:  Telegram Login Widget won't work (only one domain allowed for widget)
 
-const BOT_NAME_PROD = ''
-const BASE_ENDPOINT_PROD = ''
-const UPLOAD_ENDPOINT_PROD = ''
-const FILES_ENDPOINT_PROD = ''
+const BOT_NAME_PROD = 'bunchofsongs_bot'
+const BASE_ENDPOINT_PROD = 'https://bunchofsongsapi.herokuapp.com/graphql'
+const UPLOAD_ENDPOINT_PROD = 'https://bunchofsongsapi.herokuapp.com/fileUpload'
+const FILES_ENDPOINT_PROD = 'https://bunchofsongsapi.herokuapp.com/fileDownload?'
 
-// DEV 
+// DEV CONFIG: you need to run https://github.com/gilpanal/bunchofsongs_api
 
 const BOT_NAME_DEV = ''
 const BASE_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/graphql'

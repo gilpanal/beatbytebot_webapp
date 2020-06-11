@@ -7,7 +7,6 @@ The following repository can be used as a template for anyone who wants to creat
 
 ## Requirements:
 - Node.js (v14)
-- API: https://github.com/gilpanal/bunchofsongs_api#how-to-run-it-locally
 
 ## How to run it locally:
 1. git clone https://github.com/gilpanal/bunchofsongs
@@ -19,15 +18,15 @@ The following repository can be used as a template for anyone who wants to creat
 7. Open 127.0.0.1/index.html
 
 #### NOTE:
-A public API endpoint will be provided in the future so people don't have to start the API project in their machines to test the web app. By now the following values are needed at `config.js`
+In case you are running the API locally (https://github.com/gilpanal/bunchofsongs_api#how-to-run-it-locally). Change the following values at `config.js`
 
 >      const BOT_NAME_DEV = ''
 >      const BASE_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/graphql'
 >      const UPLOAD_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/fileUpload'
 >      const CORS_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/proxy/'
 
-Where DEVPORT is `8080` the default number choosen for the API.
-BOT_NAME_DEV is the name of your custom bot in case you want to allow login in the web client using the Telegram Login Widget(https://core.telegram.org/widgets/login). This also gives persmission to upload and delete tracks in channels/groups where the bot is admin.
+DEVPORT is `8080` by default or the number choosen for the API in case you use a different port.
+BOT_NAME_DEV is the name of your custom bot in case you want to allow login in the web client using the Telegram Login Widget (https://core.telegram.org/widgets/login). This also gives persmission to upload and delete tracks in channels/groups where the user is admin.
 
 
 ## More info:
