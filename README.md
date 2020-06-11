@@ -1,24 +1,24 @@
-# bunchofsongs
+# beatbytebot_webapp
 A new concept for collaborative music
 
 ## Summary:
-The following repository can be used as a template for anyone who wants to create their own client to consume the API provided by https://github.com/gilpanal/bunchofsongs_api, a middleware to connect audio projects through a Telegram Bot: https://github.com/gilpanal/bunchofsongs_bot
+The following repository can be used as a template for anyone who wants to create their own client to consume the API provided by https://github.com/gilpanal/beatbytebot_api, a middleware to connect audio projects through a Telegram Bot: https://github.com/gilpanal/beatbytebot
 
 
 ## Requirements:
 - Node.js (v14)
 
 ## How to run it locally:
-1. git clone https://github.com/gilpanal/bunchofsongs
-2. cd bunchofsongs
+1. git clone https://github.com/gilpanal/beatbytebot_webapp
+2. cd beatbytebot_webapp
 3. npm i
 4. Rename "src/js/config_template.js" to "src/js/config.js" and adapt it accordingly. See Note.
-5. Do the following asjustments: https://github.com/gilpanal/bunchofsongs/wiki/Solved-Issues
+5. Do the following asjustments: https://github.com/gilpanal/beatbytebot_webapp/wiki/Solved-Issues
 6. npm run dev
 7. Open 127.0.0.1/index.html
 
 #### NOTE:
-In case you are running the API locally (https://github.com/gilpanal/bunchofsongs_api#how-to-run-it-locally). Change the following values at `config.js`
+In case you are running the API locally (https://github.com/gilpanal/beatbytebot_api#how-to-run-it-locally). Change the following values at `config.js`
 
 >      const BOT_NAME_DEV = ''
 >      const BASE_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/graphql'
@@ -31,9 +31,9 @@ BOT_NAME_DEV is the name of your custom bot in case you want to allow login in t
 
 ## More info:
 
-Wiki: https://github.com/gilpanal/bunchofsongs/wiki
+Wiki: https://github.com/gilpanal/beatbytebot_webapp/wiki
 
-Project Dev Board: https://github.com/gilpanal/bunchofsongs/projects/1
+Project Dev Board: https://github.com/gilpanal/beatbytebot_webapp/projects/1
 
 ## Acknowledgements:
 <!-- prettier-ignore-start -->
