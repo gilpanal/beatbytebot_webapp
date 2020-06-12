@@ -8,6 +8,16 @@ The following repository can be used as a template for anyone who wants to creat
 ## Requirements:
 - Node.js (v14)
 
+## Demo:
+If you want to see a real example just follow these steps:
+1. In Telegram, create a new channel or group
+2. Add the bot called "bunchofsongsbot" as an admin to the chat
+3. Record something or attach an audio file
+4. Visit https://sheltered-meadow-50218.herokuapp.com/ and check the content was successfully created
+5. Visit https://bunchofsongs.web.app/ to actually listen to your audio tracks
+
+Current Bot features: https://github.com/gilpanal/beatbytebot/wiki/Current-Features
+
 ## How to run it locally:
 1. git clone https://github.com/gilpanal/beatbytebot_webapp
 2. cd beatbytebot_webapp
@@ -17,8 +27,8 @@ The following repository can be used as a template for anyone who wants to creat
 6. npm run dev
 7. Open 127.0.0.1/index.html
 
-#### NOTE:
-In case you are running the API locally (https://github.com/gilpanal/beatbytebot_api#how-to-run-it-locally). Change the following values at `config.js`
+#### NOTES:
+In case you are also running the API project locally (https://github.com/gilpanal/beatbytebot_api#how-to-run-it-locally). Change the following values at `config.js`
 
 >      const BOT_NAME_DEV = ''
 >      const BASE_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/graphql'
@@ -26,7 +36,7 @@ In case you are running the API locally (https://github.com/gilpanal/beatbytebot
 >      const CORS_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/proxy/'
 
 DEVPORT is `8080` by default or the number choosen for the API in case you use a different port.
-BOT_NAME_DEV is the name of your custom bot in case you want to allow login in the web client using the Telegram Login Widget (https://core.telegram.org/widgets/login). This also gives persmission to upload and delete tracks in channels/groups where the user is admin.
+BOT_NAME_DEV is the name of your custom bot in case you want to allow login in the web client using the Telegram Login Widget (https://core.telegram.org/widgets/login). This also gives persmission to upload and delete tracks in channels/groups where the user is admin. more details: https://github.com/gilpanal/beatbytebot_webapp/wiki/Telegram-Login-Widget
 
 
 ## More info:
