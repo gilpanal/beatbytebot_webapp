@@ -6,10 +6,10 @@
     "bunchofsongs-dac0c": {
       "hosting": {
         "prod": [
-          "bunchofsongs"
+          "beatbytebot"
         ],
         "stage": [
-          "bunchofsongs-dac0c"
+          "bunchofsongs"
         ]
       }
     }
