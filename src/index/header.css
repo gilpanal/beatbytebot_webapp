@@ -1,0 +1,32 @@
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_responsive_header */
+* {box-sizing: border-box;}
+
+body { 
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.header {
+  overflow: hidden;
+  position: fixed;
+  background-color: #f1f1f1;
+  padding: 20px 10px;
+  top: 0;
+  width: 100%;
+}
+.header-right {
+  float: right;
+}
+.telegram-widget{
+  padding-right: 16pt;
+}
+.search-field {
+  padding: 6px;
+  margin-bottom: 8px;
+  font-size: 17px;
+  border: none;
+}
+@media screen and (max-width: 500px) {
+  .header-right {
+    float: none;
+  }
+}

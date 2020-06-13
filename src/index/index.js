@@ -1,6 +1,6 @@
 import SONG_COVER from '../img/agp.png'
 import { ENDPOINT } from '../js/config'
-import { TelegramLogin } from './telegramlogin'
+import { TelegramLogin } from '../js/telegramlogin'
 
 const telegramLogin = new TelegramLogin()
 telegramLogin.init()
@@ -70,22 +70,23 @@ const paintListOfSongs = (songsList) => {
   songsList.forEach((element) => {
     let collection = ''
     if(element.collection){
-      collection = `<a href="./index.html?collection=${element.collection}" class="card-link text-info">${element.collection}</a>`
-    }    
+      collection = `<a href="./index.html?collection=${element.collection}" class="card-link green">${element.collection}</a>`
+    }       
     const template = `
-      <div class="card">
-      <a href="../song/song.html?songId=${element.id}">
-        <img class="card-img-top" src="${element.photo_url || SONG_COVER}" alt="Card image cap">
-      </a>
-      <div class="card-body">
-      <h5 class="card-title"></h5>
-      <a href="../song/song.html?songId=${element.id}" class="card-link">${element.title}</a><br>
-      ${collection}
+      <div class="grid-div">  
+        <div class="card">
+          <a href="../song/song.html?songId=${element.id}"> 
+            <img src="${element.photo_url || SONG_COVER}" alt="Card image cap" class="card-img">
+          </a>
+          <div class="card-container">
+            <a href="../song/song.html?songId=${element.id}" class="card-link blue">${element.title}</a>
+            <p>${collection}</p> 
+          </div>
+        </div>             
       </div>
-      </div>
-      `
+    `
     listElelemts += template
   })
-  document.getElementById('card-deck').insertAdjacentHTML('afterbegin', listElelemts)
+  document.getElementById('grid').insertAdjacentHTML('afterbegin', listElelemts)
   document.getElementById('searchInput').removeAttribute('disabled')
 }

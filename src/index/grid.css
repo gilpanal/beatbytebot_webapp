@@ -1,0 +1,16 @@
+/* https://codepen.io/blasco9/pen/KKpzQWR?editors=1100&ref=hackernoon.com */
+.grid {
+    width: 85%;
+    margin: 7em auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.grid-div {
+    max-width:370px;
+    margin: 14pt; 
+}
+@media screen and (max-width: 530px) {
+    .grid {        
+        margin: 8.5em auto;       
+    }
+}

@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>beat byte bot</title>
     <meta name="description" content="beat byte bot">    
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />   
     <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="index/header.css">    
+    <link rel="stylesheet" href="index/grid.css">
+    <link rel="stylesheet" href="index/card.css">    
+    <link rel="stylesheet" href="index/footer.css">
 </head>
 
 <body>
-    <input type="text" id="searchInput" placeholder="Search for names.." title="Search a song name" disabled>
-    <header class="site-header">
-        <ol class="breadcrumb"> 
-            <li><div id="telegram-login"></div></li>
-        </ol>
-    </header>
-    <a href="https://github.com/gilpanal/beatbytebot_webapp" style="position: absolute; top: 0; right: 0; border: 0; z-index: 100;" target="_blank">
-    <img src="img/forkme.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png">
-    </a>
-    <div class="container">
-        <div class="home"> 
-            <div id="card-deck" class="card-deck">
-                <div id="loader" class="loader"></div>
-            </div>
+    <header class="header">
+        <input type="text" class="search-field" id="searchInput" placeholder="Search for names.." title="Search a song name" disabled>
+        <div class="header-right">
+            <div id="telegram-login" class="telegram-widget"></div>     
         </div>
-    </div>    
-    <script src="js/search.js"></script>
-    <script src="js/index.js"></script>        
+    </header>   
+    <div id="grid" class="grid">
+        <div id="loader" class="loader"></div>
+    </div>
+    <footer class="footer">
+        <a href="https://github.com/gilpanal/beatbytebot_webapp" target="_blank"> 
+            <img src="img/github.png" alt="Github" class="github-icon">
+        </a>
+    </footer>    
+    <script src="index/search.js"></script>
+    <script src="index/index.js"></script>        
 </body>
 </html>

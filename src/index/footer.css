@@ -1,0 +1,13 @@
+/* https://www.w3schools.com/howto/howto_css_fixed_footer.asp */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color:#2196F3; 
+    text-align: right;       
+}
+
+.github-icon {
+    padding: 5px;
+}

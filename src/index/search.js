@@ -8,8 +8,8 @@ input.onkeyup = (evt) => {
 }
 const searchSong = () => {    
     const filter = input.value.toUpperCase()
-    const ul = document.getElementById('card-deck')
-    const li = ul.getElementsByClassName('card')    
+    const ul = document.getElementById('grid')
+    const li = ul.getElementsByClassName('grid-div')    
     for (let i = 0; i < li.length; i++) {
       const a = li[i].getElementsByTagName('a')[1]
       const txtValue = a.textContent || a.innerText
