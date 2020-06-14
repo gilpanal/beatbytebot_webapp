@@ -9,7 +9,7 @@ The following repository can be used as a template for anyone who wants to creat
 - Node.js (v14)
 
 ## Demo:
-If you want to see a real example just follow these steps:
+If you want to see it in action just follow these steps:
 1. In Telegram, create a new channel or group
 2. Add the bot called "bunchofsongsbot" as an admin to the chat
 3. Record something or attach an audio file
@@ -22,21 +22,15 @@ Current Bot features: https://github.com/gilpanal/beatbytebot/wiki/Current-Featu
 1. git clone https://github.com/gilpanal/beatbytebot_webapp
 2. cd beatbytebot_webapp
 3. npm i
-4. Rename "src/js/config_template.js" to "src/js/config.js" and adapt it accordingly. See Note.
-5. Do the following asjustments: https://github.com/gilpanal/beatbytebot_webapp/wiki/Solved-Issues
+4. Rename "src/js/config_template.js" to "src/js/config.js". See Notes below
+5. Do the following asjustment: https://github.com/gilpanal/beatbytebot_webapp/wiki/Solved-Issues
 6. npm run dev
 7. Open 127.0.0.1/index.html
 
 #### NOTES:
-In case you are also running the API project locally (https://github.com/gilpanal/beatbytebot_api#how-to-run-it-locally). Change the following values at `config.js`
-
->      const BOT_NAME_DEV = ''
->      const BASE_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/graphql'
->      const UPLOAD_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/fileUpload'
->      const CORS_ENDPOINT_DEV = 'http://localhost:'+DEVPORT+'/proxy/'
-
+In case you are also running the API project locally (https://github.com/gilpanal/beatbytebot_api#how-to-run-it-locally). Change `MODE=DEV` at `config.js`
 DEVPORT is `8080` by default or the number choosen for the API in case you use a different port.
-BOT_NAME_DEV is the name of your custom bot in case you want to allow login in the web client using the Telegram Login Widget (https://core.telegram.org/widgets/login). This also gives persmission to upload and delete tracks in channels/groups where the user is admin. more details: https://github.com/gilpanal/beatbytebot_webapp/wiki/Telegram-Login-Widget
+BOT_NAME_DEV is the name of your custom bot in case you want to allow login in the web client using the Telegram Login Widget (https://core.telegram.org/widgets/login). This also gives persmission to upload and delete tracks in channels/groups where the user is admin. More details: https://github.com/gilpanal/beatbytebot_webapp/wiki/Telegram-Login-Widget
 
 
 ## More info:
