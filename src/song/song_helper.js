@@ -1,5 +1,5 @@
 import { ENDPOINT, DOWNLOAD_ENDPOINT } from '../js/config'
-import { LOADER_ELEM_ID, SONG_ID, setUser, trackHandler, fileUploader, playlist } from './song'
+import { LOADER_ELEM_ID, SONG_ID, setUser, setUserPermission, trackHandler, fileUploader, playlist, recorder } from './song'
 
 function Track(title, link, customClass) {
     this.name = title
@@ -75,6 +75,7 @@ export const cancelLoader = (loaderId) => {
 const successfulLoginAtPage = (info) => {
 
     if (info && info.songInfoById.user_permission) {
+        setUserPermission(true)
         fileUploader.enableUpload()
         trackHandler.displayOptMenuForTracks()
     }
@@ -83,21 +84,26 @@ const successfulLoginAtPage = (info) => {
 const createArrayOfTracks = (tracksInfo) => {
     const isAdmin = tracksInfo.songInfoById && tracksInfo.songInfoById.user_permission
     if (isAdmin) {
+        setUserPermission(true)
         fileUploader.enableUpload()
     }
     if (tracksInfo.tracks) {
         const arrayLoad = []
-        tracksInfo.tracks.forEach((element) => {
-            const audio = element?.message?.audio || element?.message?.voice
-            const title = audio.title || element.message.date
-            const track_id = audio.file_unique_id + '_' + element.message.date
-            const customClass = { chatId: SONG_ID, message_id: element.message.message_id, name: title, track_id: track_id }
-            const newTrack = new Track(title, element.file_path , customClass)            
-            arrayLoad.push(newTrack)
+        tracksInfo.tracks.forEach((element) => {            
+            if(element){
+                const audio = element?.message?.audio || element?.message?.voice
+                const title = audio.title || element.message.date
+                const track_id = audio.file_unique_id + '_' + element.message.date
+                const customClass = { chatId: SONG_ID, message_id: element.message.message_id, name: title, track_id: track_id }
+                const newTrack = new Track(title, element.file_path , customClass)            
+                arrayLoad.push(newTrack)
+            }            
         })
         createTrackList(arrayLoad, isAdmin)
     } else {
         cancelLoader(LOADER_ELEM_ID)
+        playlist.initExporter()
+        recorder.init()
     }
 }
 
@@ -113,6 +119,7 @@ const createTrackList = (arrayLoad, isAdmin) => {
         if (errorIs) {
             alert(errorIs)
         } else {
+            recorder.init()
             if (isAdmin) {
                 trackHandler.displayOptMenuForTracks()
             }

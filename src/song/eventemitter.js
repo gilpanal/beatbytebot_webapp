@@ -2,7 +2,7 @@
  * This script is provided to give an example how the playlist can be controlled using the event emitter.
  * This enables projects to create/control the useability of the project.
 */
-import {playlist} from './song'
+import { playlist, fileUploader, USER_PERMISSION } from './song'
 
 /* https://github.com/naomiaro/waveform-playlist/blob/master/dist/waveform-playlist/js/emitter.js */
 var ee = playlist.getEventEmitter();
@@ -19,6 +19,7 @@ var audioPos = 0;
 var downloadUrl = undefined;
 var isLooping = false;
 var playoutPromises;
+var isRecording = false;
 
 function toggleActive(node) {
   var active = node.parentNode.querySelectorAll('.active');
@@ -138,6 +139,11 @@ $container.on("click", ".btn-pause", function() {
 
 $container.on("click", ".btn-stop", function() {
   isLooping = false;
+  if(isRecording && USER_PERMISSION){
+    isRecording = false
+    const newTrackPos = playlist.getInfo().length - 1      
+    ee.emit('startaudiorendering', 'wav', newTrackPos)
+  }
   ee.emit("stop");
 });
 
@@ -157,7 +163,10 @@ $container.on("click", ".btn-clear", function() {
 });
 
 $container.on("click", ".btn-record", function() {
-  ee.emit("record");
+  if(!isRecording){
+    isRecording = true
+    ee.emit("record");
+  }  
 });
 
 //track interaction states
@@ -364,8 +373,16 @@ ee.on("audiosourcesrendered", function() {
   displayLoadingData("Tracks have been rendered");
 });
 
-ee.on('audiorenderingfinished', function (type, data) {
-  if (type == 'wav'){
+ee.on('audiorenderingfinished', function (type, data, trackPos) {
+
+  // trackPos is the param sent at btn-stop when stop recording
+  // but received from Playlist.js in event audiorenderingfinished  
+  if(trackPos >= 0 && USER_PERMISSION){    
+    data.name = 'audio';
+    data.fileName = Date.now()   
+    fileUploader.sendData(data, 'blob')
+  }
+  else if (type == 'wav'){
     if (downloadUrl) {
       window.URL.revokeObjectURL(downloadUrl);
     }

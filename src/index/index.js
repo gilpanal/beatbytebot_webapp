@@ -68,24 +68,26 @@ const renderHomePage = (songsList, error) => {
 
 const paintListOfSongs = (songsList) => {
   songsList.forEach((element) => {
-    let collection = ''
-    if(element.collection){
-      collection = `<a href="./index.html?collection=${element.collection}" class="card-link green">${element.collection}</a>`
-    }       
-    const template = `
-      <div class="grid-div">  
-        <div class="card">
-          <a href="../song/song.html?songId=${element.id}"> 
-            <img src="${element.photo_url || SONG_COVER}" alt="Card image cap" class="card-img">
-          </a>
-          <div class="card-container">
-            <a href="../song/song.html?songId=${element.id}" class="card-link blue">${element.title}</a>
-            <p>${collection}</p> 
-          </div>
-        </div>             
-      </div>
-    `
-    listElelemts += template
+    if(element){
+      let collection = ''
+      if(element.collection){
+        collection = `<a href="./index.html?collection=${element.collection}" class="card-link green">${element.collection}</a>`
+      }     
+      const template = `
+        <div class="grid-div">
+          <div class="card">
+            <a href="../song/song.html?songId=${element.id}"> 
+              <img src="${element.photo_url || SONG_COVER}" alt="Card image cap" class="card-img">
+            </a>
+            <div class="card-container">
+              <a href="../song/song.html?songId=${element.id}" class="card-link blue">${element.title}</a>
+              <p>${collection}</p>
+            </div>
+          </div>           
+        </div>
+      `
+      listElelemts += template
+    }    
   })
   document.getElementById('grid').insertAdjacentHTML('afterbegin', listElelemts)
   document.getElementById('searchInput').removeAttribute('disabled')

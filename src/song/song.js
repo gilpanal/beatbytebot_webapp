@@ -3,6 +3,7 @@ import { FileUploader } from './fileuploader'
 import WaveformPlaylist from 'waveform-playlist'
 import { TelegramLogin } from '../js/telegramlogin'
 import { doFetch, telegramLoginCallback, doAfterSongFetched } from './song_helper'
+import { Recorder } from './record'
 
 
 const telegramLogin = new TelegramLogin(telegramLoginCallback)
@@ -13,9 +14,13 @@ export const SONG_ID = parseFloat(queryString.split('songId=')[1])
 
 export const LOADER_ELEM_ID = 'loader'
 export let USER_INFO = telegramLogin.telegramUser
+export let USER_PERMISSION = false
 
 export const setUser = (userIs) => {
     USER_INFO = userIs
+}
+export const setUserPermission = (permission) => {
+  USER_PERMISSION = permission
 }
 
 export const playlist = WaveformPlaylist({
@@ -36,8 +41,9 @@ export const playlist = WaveformPlaylist({
   timescale: true
 })
 
-export const trackHandler = new TrackHandler(playlist)
+export const trackHandler = new TrackHandler()
 export const fileUploader = new FileUploader(SONG_ID, trackHandler, LOADER_ELEM_ID)
+export const recorder = new Recorder()
 
 const songId = SONG_ID
 let query = `query GetTracks($songId: Float!) {

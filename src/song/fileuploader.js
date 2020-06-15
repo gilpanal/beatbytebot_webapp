@@ -24,8 +24,6 @@ export class FileUploader {
         }
     }
     fileReader (thefile) {
-               
-        const chatField = {name:'chat_id' , value: this.chatId}
         const file = {
             dom: document.getElementById('fileInput'),
             binary: null
@@ -38,7 +36,7 @@ export class FileUploader {
         })
 
         reader.addEventListener('loadend', () => {
-            this.sendData(file, chatField)
+            this.sendData(file)
         })
     
         if (thefile) {
@@ -52,9 +50,9 @@ export class FileUploader {
             reader.readAsBinaryString(file.dom.files[0])
         })    
     }
-    sendData(file, chatField) {        
+    sendData(file, type) {        
         
-        if (!file.binary && file.dom.files.length > 0) {
+        if (!type && !file.binary && file.dom.files.length > 0) {
             setTimeout(this.sendData, 10)
             return
         }
@@ -62,8 +60,11 @@ export class FileUploader {
         const XHR = new XMLHttpRequest()    
         
         const formData = new FormData()
-        formData.append(chatField.name, chatField.value)
-        formData.append(file.dom.name, file.dom.files[0], file.dom.files[0].name)      
+        const dataFormName = type ? file.name : file.dom.name
+        const dataFormValue = type ? file : file.dom.files[0]
+        const dataFormFileName = type ? file.fileName : file.dom.files[0].name
+        formData.append('chat_id', this.chatId)
+        formData.append(dataFormName, dataFormValue, dataFormFileName)      
         formData.append('user_info', USER_INFO)  
         
         XHR.addEventListener('load', (event) => {                     
