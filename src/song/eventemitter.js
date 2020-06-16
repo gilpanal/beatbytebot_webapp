@@ -139,10 +139,12 @@ $container.on("click", ".btn-pause", function() {
 
 $container.on("click", ".btn-stop", function() {
   isLooping = false;
-  if(isRecording && USER_PERMISSION){
+  if(isRecording){
     isRecording = false
-    const newTrackPos = playlist.getInfo().length - 1      
-    ee.emit('startaudiorendering', 'wav', newTrackPos)
+    if(USER_PERMISSION) {
+      const newTrackPos = playlist.getInfo().length - 1 
+      ee.emit('startaudiorendering', 'wav', newTrackPos)
+    }
   }
   ee.emit("stop");
 });
