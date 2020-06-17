@@ -14,7 +14,7 @@ If you want to see it in action just follow these steps:
 2. Add the bot called "bunchofsongsbot" as an admin to the chat
 3. Record something or attach an audio file
 4. Visit https://sheltered-meadow-50218.herokuapp.com/ and check the content was successfully created
-5. Visit https://bunchofsongs.web.app/ to actually listen to your audio tracks
+5. Visit https://bunchofsongs.web.app/ to actually listen to your audio tracks. See Note 1
 
 Current Bot features: https://github.com/gilpanal/beatbytebot/wiki/Current-Features
 
@@ -22,13 +22,14 @@ Current Bot features: https://github.com/gilpanal/beatbytebot/wiki/Current-Featu
 1. git clone https://github.com/gilpanal/beatbytebot_webapp
 2. cd beatbytebot_webapp
 3. npm i
-4. Rename "src/js/config_template.js" to "src/js/config.js". See Notes below
+4. Rename "src/js/config_template.js" to "src/js/config.js". See Note 2
 5. Do the following asjustment: https://github.com/gilpanal/beatbytebot_webapp/wiki/Solved-Issues
 6. npm run dev
 7. Open 127.0.0.1/index.html
 
 #### NOTES:
-In case you are also running the API project locally (https://github.com/gilpanal/beatbytebot_api#how-to-run-it-locally). Change `MODE=DEV` at `config.js`
+1. Please when using the web browser avoid Safari as it's not compatible with Telegram voice recording audio format (.oga/ogg)
+2. In case you are also running the API project locally (https://github.com/gilpanal/beatbytebot_api#how-to-run-it-locally). Change `MODE=DEV` at `config.js`
 DEVPORT is `8080` by default or the number choosen for the API in case you use a different port.
 BOT_NAME_DEV is the name of your custom bot in case you want to allow login in the web client using the Telegram Login Widget (https://core.telegram.org/widgets/login). This also gives persmission to upload and delete tracks in channels/groups where the user is admin. More details: https://github.com/gilpanal/beatbytebot_webapp/wiki/Telegram-Login-Widget
 
